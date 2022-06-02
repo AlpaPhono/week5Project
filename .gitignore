@@ -4,4 +4,4 @@ htmlcov/
 .coverage
 *.db
 /venv
-song_artist_database.mwb
+/resources
