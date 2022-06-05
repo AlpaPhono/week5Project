@@ -1,7 +1,26 @@
 <html>
+    <head>
+        <title> Sign Up page</title>
+    </head>
     <body>
-        <h1> This is the signup page </h1>
+        <div class = 'form'>
+            <form method = 'POST' action=" ">
+                {{ form.hidden_tag() }}
+                {{ form.stage_name.label }} {{form.stage_name}}
+                <br>
+                {{ form.email_.label }} {{form.email_}}
+                <br>
+                {{ form.password.label }} {{form.password}}
+                <br>
+                {{ form.confirm.label }} {{form.confirm}}
+                <br>
+                {{ form.submit }}
+                <br>
+                {{ message }}
+            </form>
+        </div>
         {%block body %}
+
         {%endblock body%}
     </body>
 </html>
