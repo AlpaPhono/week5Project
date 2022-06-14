@@ -1,15 +1,18 @@
 <html>
     <head>
-        <title> Log In </title>
+        <title> Your Music </title>
     </head>
     <body>
         <div class = 'form'>
             <form method = 'POST' action=" ">
                 {{ form.hidden_tag() }}
-                {{ form.stage_name.label }} {{form.stage_name}}
+                {{ form.song_name.label }} {{form.song_name}}
                 <br>
-                {{ form.password.label }} {{form.password}}
+                {{ form.song_Link.label }} {{form.song_Link}}
                 <br>
+                {{form.song_genre.label}} {{form.song_genre}}
+                <br>
+                <!-- I wont add a section to add artist ID because I want that to be automatically programmed in the route.-->
                 {{ form.submit }}
                 <br>
                 {{ message }}
