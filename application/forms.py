@@ -18,7 +18,8 @@ class LoginForm(FlaskForm):
 
 class SongForm(FlaskForm):
     song_name = StringField('Name of your Song', [validators.length(min =1, max=25), validators.DataRequired()])
-    song_Link = StringField('Song Link',[validators.length(min=1, max=25)])
+    song_Link = StringField('Song Link',[validators.length(min=1, max=40)])
     song_genre = SelectField('Genre', choices= ['RAP','RNB','SOUL','Afrobeats','POP','COUNTRY','COUNTRY','JAZZ'])
-    artist_id = StringField('AUTO COMPLETED', [validators.length(min=1,max=25),validators.DataRequired()])
+    #artist_id = StringField('AUTO COMPLETED', [validators.length(min=1,max=25),validators.DataRequired()])
+    submit = SubmitField('Submit')
     

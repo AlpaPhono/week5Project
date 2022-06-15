@@ -1,10 +1,16 @@
 <html>
     <head>
-        {% block head %}
         <title> Your Music </title>
-        {% endblock %}
     </head>
     <body>
+        <p> This is a list of your songs </p>
+
+        {% for song in all_songs %}
+
+        <p> {{song.song_name}}</p>
+
+        {% endfor %}
+        
         <div class = 'form'>
             <form method = 'POST' action=" ">
                 {{ form.hidden_tag() }}

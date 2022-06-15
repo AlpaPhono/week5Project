@@ -61,22 +61,34 @@ def signUp():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('/home'))
+    return redirect(url_for('home'))
 
 
 @app.route('/music', methods = ['GET','POST'])
-#@login_required
+@login_required
 def music():
 
     message = ''
     form = SongForm()
+    link = form.song_Link.data
+    user_id = current_user.user_id
+    all_songs = Songs.query.all()
+
 
     if request.method == 'POST' and form.validate_on_submit():
-        pass
-
-   
-
+        song = Songs.query.filter_by(song_link = link).first()
+        print(song)
+        if song:
+            message = "Can't have multiple songs with the same link" 
+            return redirect(url_for('music'))
+        else:
+            new_song = Songs(song_name = form.song_name.data, song_link = form.song_Link.data, song_genre = form.song_genre.data, artist_id = user_id)
        
+            db.session.add(new_song)
+            db.session.commit()
+            message = f'We have added {new_song.song_name}'
+    
+            print(new_song.song_name)
 
-    return render_template('music.html', form = form, message = message, artist = current_user)
+    return render_template('music.html', form = form, message = message, current_artist = current_user, all_songs = all_songs, song_name = Songs().song_name)
 
