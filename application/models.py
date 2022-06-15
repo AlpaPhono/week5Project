@@ -1,12 +1,16 @@
 from application import db
+from flask_login import UserMixin
 
 # Code below is  Creating database Models
-class Artist(db.Model):
+class Artist(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
     stage_name=db.Column(db.String(30))
     email = db.Column(db.String(30))
     password = db.Column(db.String(16))
     songs = db.relationship('Songs', backref = 'artistbr')
+
+    def get_id(self):
+        return (self.user_id)
 
 
 class Songs(db.Model):
