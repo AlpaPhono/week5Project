@@ -20,33 +20,36 @@ def signUp():
     form = SignupForm()
 
     if request.method == 'POST' and form.validate_on_submit():
-        
-        artist1 = Artist(stage_name = form.stage_name.data, email = form.email_.data,password = form.confirm.data)
-        db.session.add(artist1)
-        db.session.commit()
-        message = f'thank you {artist1.stage_name}'
+
+        email = form.email_.data
+        password = form.password.data
+        stage_name = form.stage_name.data
+        artist = Artist.query.filter_by(email = email).first()
+        if artist:
+            message = 'Email or Stage Name Already Exists'
+        else:    
+
+            new_artist = Artist(stage_name = form.stage_name.data, email = form.email_.data,password = form.confirm.data)
+            db.session.add(new_artist)
+            db.session.commit()
+            message = f'thank you {new_artist.stage_name}'
     
 
     return  render_template('signup.html', form = form, message = message)
 
-'''
-@app.route('/viewMusic', methods = ['GET','POST'])
-def viewMusic():
-    
+
+@app.route('/music', methods = ['GET','POST'])
+def music():
+
     message = ''
     form = SongForm()
 
     if request.method == 'POST' and form.validate_on_submit():
-        # not finished
-        # i am tring to make an algorithim that checks who is uploading the song and 
-        
-        for name in Artist.stage_name():
-            if 
-        artist_id =
-        song1 = Songs(song_name = form.song_name.data(), song_Link = form.song_Link.data())
+        pass
 
-        
+   
 
-        return render_template(),  'This is View music page'
+       
 
-'''
+    return 'This is View music page'
+
