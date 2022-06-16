@@ -1,7 +1,7 @@
 from email import message
 from flask import render_template, request, url_for, redirect
 from application import app, db
-from application.forms import LoginForm, SignupForm, SongForm, DeleteForm
+from application.forms import LoginForm, SignupForm, SongForm, UpdateSongForm
 from application.models import Artist, Songs
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -76,7 +76,6 @@ def music():
     artist_songs = current_user.songs
     song = Songs.query.all()
 
-    deleteForm = DeleteForm()
 
 
 
@@ -95,7 +94,7 @@ def music():
     
 
 
-    return render_template('music.html', deleteForm = deleteForm, form = form, message = message, current_artist = current_user, all_songs = artist_songs, song_name = Songs().song_name)
+    return render_template('music.html', form = form, message = message, current_artist = current_user, all_songs = artist_songs, song_name = Songs().song_name)
 
 
 # ITS ALIVE
@@ -111,7 +110,25 @@ def delete(id):
 
 # I dont understand this update function just yet that I am referencing
 
-@app.route('/update/<int:id>')
+@app.route('/update/<int:id>', methods = ['GET','POST'])
 def update(id):
-    song_to_update = Songs.query.get(song_id = id)
-    update = SongForm()
+    message = ''
+    song_to_update = Songs.query.filter_by(song_id = id).first()
+    form = UpdateSongForm()
+    new_song_name = form.song_name.data
+    message = ''
+    if request.method == 'POST' and form.validate_on_submit():
+        if song_to_update.song_name == new_song_name:
+            message = 'No changes were made'
+            redirect(url_for('home'))
+        else:
+            song_to_update.name = new_song_name
+            db.session.commit()
+            message = f'Name of song has been changed to {new_song_name}'
+            
+
+
+
+
+
+    return render_template('update.html', form = form, song_name = new_song_name, message = message)

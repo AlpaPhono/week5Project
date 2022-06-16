@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title> Update Your Song </title>
+    </head>
+    <body>
+        <h1> Update Your Song Details </h1>
+        <div class = 'form'>
+            <form method = 'POST' action=" ">
+                {{ form.hidden_tag() }}
+                {{ form.song_name.label }} {{form.song_name}}
+                <br>
+                {{ form.submit }}
+                <br>
+                {{ message }}
+            </form>
+        </div>
+        {%block body %}
+
+        {%endblock body%}
+    </body>
+</html>

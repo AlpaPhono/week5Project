@@ -3,25 +3,22 @@
         <title> Your Music </title>
     </head>
     <body>
-        <div class = 'deleteForm'> 
-            <form method = 'POST' action = "">
-                {{ deleteForm.hidden_tag() }}
-                <p> This is a list of your songs </p>
+       
+        <p> This is a list of your songs </p>
 
-             {% for song in all_songs %}
+        {% for song in all_songs %}
     
-                <li> {{song.song_name}}, {{song.song_link}}, {{song.song_genre}} </li>
-                <br>
-                <button type ="button"><span><a href="{{ url_for('delete', id = song.song_id) }}">Delete</a></span></button>
-                <br>
+        <li> {{song.song_name}}, {{song.song_link}}, {{song.song_genre}} </li>
+        <br>
+        <button type ="button"><span><a href="{{ url_for('delete', id = song.song_id) }}">Delete</a></span></button>
+        <button type ="button"><span><a href="{{ url_for('update', id = song.song_id) }}">Update</a></span></button>
+        <br>
     
-                {% endfor %}
-            </form>
-
-            
-        </div>
-        
-        
+        {% endfor %}
+           
+        <br>
+        <h1> Add A Song </h1> 
+        <br>   
         <div class = 'form'>
             <form method = 'POST' action=" ">
                 {{ form.hidden_tag() }}
