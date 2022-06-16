@@ -122,9 +122,8 @@ def update(id):
             message = 'No changes were made'
             return redirect(url_for('music'))
         else:
-            song_to_update.name = new_song_name
+            song_to_update.song_name = new_song_name
             db.session.commit()
-            #Songs.query.get(id).name
             message = f'Name of song has been changed to {new_song_name}'
             return redirect(url_for('music'))
             
