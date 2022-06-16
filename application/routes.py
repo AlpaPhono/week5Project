@@ -1,7 +1,7 @@
 from email import message
 from flask import render_template, request, url_for, redirect
 from application import app, db
-from application.forms import LoginForm, SignupForm, SongForm
+from application.forms import LoginForm, SignupForm, SongForm, DeleteForm
 from application.models import Artist, Songs
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -51,6 +51,7 @@ def signUp():
             db.session.add(new_artist)
             db.session.commit()
             message = f'thank you {new_artist.stage_name}'
+            return redirect(url_for('home'))
     
 
     return  render_template('signup.html', form = form, message = message)
@@ -72,12 +73,15 @@ def music():
     form = SongForm()
     link = form.song_Link.data
     user_id = current_user.user_id
-    all_songs = Songs.query.all()
+    artist_songs = current_user.songs
+    song = Songs.query.all()
+
+    deleteForm = DeleteForm()
+
 
 
     if request.method == 'POST' and form.validate_on_submit():
         song = Songs.query.filter_by(song_link = link).first()
-        print(song)
         if song:
             message = "Can't have multiple songs with the same link" 
             return redirect(url_for('music'))
@@ -87,8 +91,27 @@ def music():
             db.session.add(new_song)
             db.session.commit()
             message = f'We have added {new_song.song_name}'
+            redirect(url_for('music'))
     
-            print(new_song.song_name)
 
-    return render_template('music.html', form = form, message = message, current_artist = current_user, all_songs = all_songs, song_name = Songs().song_name)
 
+    return render_template('music.html', deleteForm = deleteForm, form = form, message = message, current_artist = current_user, all_songs = artist_songs, song_name = Songs().song_name)
+
+
+# Trying to find how I can link this to a button in my music.html
+@app.route('/delete/<int:id>', methods = ['GET','POST'])
+def delete(id):
+    song_to_delete = Songs.query.filter_by(song_id = id).first()
+
+    db.session.delete(song_to_delete)
+    db.session.commit()
+    return redirect(url_for('music')) #render_template('music.html', song_to_delete = song_to_delete)
+
+
+
+# I dont understand this update function just yet that I am referencing
+
+@app.route('/update/<int:id>')
+def update(id):
+    song_to_update = Songs.query.get(song_id = id)
+    update = SongForm()

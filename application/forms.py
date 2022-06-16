@@ -23,3 +23,5 @@ class SongForm(FlaskForm):
     #artist_id = StringField('AUTO COMPLETED', [validators.length(min=1,max=25),validators.DataRequired()])
     submit = SubmitField('Submit')
     
+class DeleteForm(FlaskForm):
+    delete = SubmitField('Delete')
