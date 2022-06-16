@@ -98,7 +98,7 @@ def music():
     return render_template('music.html', deleteForm = deleteForm, form = form, message = message, current_artist = current_user, all_songs = artist_songs, song_name = Songs().song_name)
 
 
-# Trying to find how I can link this to a button in my music.html
+# ITS ALIVE
 @app.route('/delete/<int:id>', methods = ['GET','POST'])
 def delete(id):
     song_to_delete = Songs.query.filter_by(song_id = id).first()
