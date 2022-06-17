@@ -7,7 +7,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 #Creating web pages
 
-@app.route('/')
+@app.route('/',methods = ['GET','POST'])
 @app.route('/home', methods = ['GET','POST'])
 def home():
     form = LoginForm()
@@ -39,7 +39,7 @@ def signUp():
 
     if request.method == 'POST' and form.validate_on_submit():
 
-        email = form.email_.data
+        email = form.email.data
         password = form.password.data
         stage_name = form.stage_name.data
         artist = Artist.query.filter_by(email = email).first()
@@ -47,7 +47,7 @@ def signUp():
             message = 'Email or Stage Name Already Exists'
         else:    
 
-            new_artist = Artist(stage_name = form.stage_name.data, email = form.email_.data,password = form.confirm.data)
+            new_artist = Artist(stage_name = form.stage_name.data, email = form.email.data,password = form.confirm.data)
             db.session.add(new_artist)
             db.session.commit()
             message = f'thank you {new_artist.stage_name}'
