@@ -37,7 +37,7 @@ def signUp():
     message = ''
     form = SignupForm()
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST': #and form.validate_on_submit():
 
         email = form.email.data
         password = form.password.data
